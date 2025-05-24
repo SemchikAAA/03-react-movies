@@ -10,7 +10,7 @@ import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
 export default function App() {
-  const [selectedMovie, isSelectedMovie] = useState<Movie | null>(null);
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -18,16 +18,16 @@ export default function App() {
 
   const open = (movie: Movie) => {
     setIsOpen(true);
-    isSelectedMovie(movie);
+    setSelectedMovie(movie);
   };
   const close = () => {
     setIsOpen(false);
-    isSelectedMovie(null);
+    setSelectedMovie(null);
   };
 
   const notify = () => toast.error("No movies found for your request.");
 
-  const handleOrder = async (query: string) => {
+  const searchMovie = async (query: string) => {
     try {
       setIsLoading(true);
       setIsError(false);
@@ -48,7 +48,7 @@ export default function App() {
 
   return (
     <div className={styles.app}>
-      <SearchBar onSubmit={handleOrder} />
+      <SearchBar onSubmit={searchMovie} />
       <Toaster />
       {isLoading && <Loader />}
       {isError && <ErrorMessage />}

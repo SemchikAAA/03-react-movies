@@ -11,11 +11,12 @@ export default function SearchBar({ onSubmit }: SearchBarProps) {
   const handleSubmit = (formData: FormData) => {
     const query = formData.get("query") as string;
 
-    onSubmit(query);
-
     if (query.length === 0) {
       notify();
+      return;
     }
+
+    onSubmit(query);
   };
 
   return (
